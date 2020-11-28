@@ -2,6 +2,8 @@ package edu.temple.listviewex;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Context;
 import android.content.Intent;
@@ -25,6 +27,10 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
+    FragmentManager fragmentManager;
+    FragmentTransaction fragmentTransaction;
+    BookmarkFragment bookmarkFragment;
+
     ArrayList<String> bookmarkList;
     Button btnBookmarks;
     File file;
@@ -39,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         String internalFile = "myFile";
         file = new File(getFilesDir(), internalFile);
 
-
+        bookmarkFragment = new BookmarkFragment();
 
 
         if(file.exists())
@@ -71,19 +77,26 @@ public class MainActivity extends AppCompatActivity {
         btnBookmarks.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
+                FragmentManager fragmentManager =  getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
                 //create a bundle with all the stuff needed
                 //array list for the background color
                 //int for the position
                 //string for the name
                 Bundle bundle = new Bundle();
                 bundle.putStringArrayList("ArrayList",bookmarkList);
+                bookmarkFragment.setArguments(bundle);
+
+                if(!(getSupportFragmentManager().findFragmentById(R.id.container) instanceof BookmarkFragment))
+                {
+                    fragmentTransaction.add(R.id.container,bookmarkFragment);
+                }
 
 
-                Intent secondActivity = new Intent(MainActivity.this, SecondActivity.class);
-                secondActivity.putExtras(bundle);
-
-                //start the activity with the bundle
-                startActivity(secondActivity);
+                fragmentTransaction.commit();
 
 
             }
