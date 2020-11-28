@@ -11,13 +11,12 @@
         android:id="@+id/btnBookmarks"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="61dp"
-        android:layout_marginBottom="55dp"
+        android:layout_marginBottom="40dp"
         android:text="Open Bookmarks"
         app:layout_constraintBottom_toTopOf="@+id/container"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/txtSelected" />
 
     <FrameLayout
         android:id="@+id/container"
@@ -32,4 +31,16 @@
         app:layout_constraintTop_toBottomOf="@+id/btnBookmarks">
 
     </FrameLayout>
+
+    <TextView
+        android:id="@+id/txtSelected"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="25dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toTopOf="@+id/btnBookmarks"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

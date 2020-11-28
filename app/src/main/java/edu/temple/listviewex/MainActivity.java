@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -25,13 +26,14 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity{
 
     FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
     BookmarkFragment bookmarkFragment;
 
     ArrayList<String> bookmarkList;
+    TextView txtSelected;
     Button btnBookmarks;
     File file;
 
@@ -44,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
         bookmarkList = new ArrayList<>();
         String internalFile = "myFile";
         file = new File(getFilesDir(), internalFile);
+        txtSelected = findViewById(R.id.txtSelected);
 
         bookmarkFragment = new BookmarkFragment();
 
@@ -114,7 +117,29 @@ public class MainActivity extends AppCompatActivity {
         bookmarkList.add("White");
     }
 
+    public void SaveFile(ArrayList<String> arrayList)
+    {
+        FileOutputStream fos;
+        ObjectOutputStream oos;
 
+        try
+        {
+            fos = new FileOutputStream(file);
+             oos = new ObjectOutputStream(fos);
+             oos.writeObject(arrayList);
+             oos.close();
+        }
+        catch(IOException e)
+        {
 
+        }
+
+    }
+
+    public void OpenSite(String selectedBookmark)
+    {
+        String bookmarkURL = selectedBookmark;
+        txtSelected.setText(bookmarkURL);
+    }
 
 }

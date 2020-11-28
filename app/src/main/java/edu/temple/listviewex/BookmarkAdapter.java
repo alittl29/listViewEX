@@ -19,13 +19,14 @@ public class BookmarkAdapter extends BaseAdapter {
 
     Context context;
     ArrayList<String> arrayList;
-
+    MainActivity parentActivity;
 
     //constructor
     public BookmarkAdapter(Context context, ArrayList<String> arrayList)
     {
         this.context = context;
         this.arrayList = arrayList;
+        parentActivity = (MainActivity) context;
     }
 
     @Override
@@ -43,6 +44,8 @@ public class BookmarkAdapter extends BaseAdapter {
         return 0;
     }
 
+
+
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
 
@@ -57,6 +60,15 @@ public class BookmarkAdapter extends BaseAdapter {
 
         TextView txtBookmark = (TextView) view.findViewById(R.id.txtBookmark);
         txtBookmark.setText(arrayList.get(position).toString());
+        txtBookmark.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String selectedBookmark = arrayList.get(position).toString();
+                parentActivity.OpenSite(selectedBookmark);
+            }
+        });
+
+
 
         ImageButton btnDelete = (ImageButton)view.findViewById(R.id.btnDelete);
         btnDelete.setOnClickListener(new View.OnClickListener() {
@@ -70,8 +82,11 @@ public class BookmarkAdapter extends BaseAdapter {
                             public void onClick(DialogInterface dialog, int id) {
                                 // CONFIRM
                                 arrayList.remove(position);
+                                parentActivity.SaveFile(arrayList);
                                 notifyDataSetChanged();
-                                Toast.makeText(context,"Bookmark Deleted",Toast.LENGTH_SHORT);
+
+                             //
+
                             }
                         })
                         .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -89,4 +104,5 @@ public class BookmarkAdapter extends BaseAdapter {
 
         return view;
     }
+
 }
